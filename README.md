@@ -1,6 +1,11 @@
 # ionic-quickstart
 A quickstart project for ionic, using gulp, making life just that bit easier.
 
+## Getting started
+1. Install npm modules: `npm install`
+2. Compile and start serving: `gulp serve` or `gulp emulate`
+3. See your app running at `http://localhost:8100`
+
 ## Usage
 For basic usage and explanation, just run `gulp help`:
 
@@ -17,11 +22,43 @@ Available tasks
   emulate        Start ionic emulator
   help           Display this help text.
   index          Copy index.html
-  ionic-emulate  *Only* start ionic emulate
-  ionic-serve    *Only* start ionic serve
   logic          Compile all JS logic
   serve          Start ionic webserver @:8100
   style          Compile all scss
   templates      Compile templates to Angular templateCache
   watch          Set gulp in watch mode
+```
+
+### Running your application
+The two commands below make sure your application is always in sync. Source code is watched, compiled and changes are pushed to your browser or emulator using livereload.
+
+* `gulp serve`
+Compiles and serves your app (using the ionic CLI) on port `8100`
+
+* `gulp emulate`
+Similar to `gulp serve`, but starts the emulator to show your app. Your app is also still accessible on port `8100`.
+
+### Compiling your application
+Compilation of your app is broken down in several steps and tasks. Compilation is automatically done when using either `gulp serve` or `gulp emulate`.
+
+* `gulp compile`
+Composite task to perform all compilation tasks in the correct order.
+
+* WIP: Add short explanation for all tasks.
+
+#### Clean
+* `gulp clean`
+Cleans all compiled resources, effectively deleting the `./www` folder
+
+#### Watch
+All compilation tasks can be either run for once or run continuously by registering a watch task. To enable watch, use the `gulp watch` task, e.g.:
+
+`gulp watch compile`
+The watch command makes sure the gulp setup is set in watch mode. All following tasks register a watch. This also works for e.g. `gulp watch assets`.
+
+## Application structure
+The following application structure is assumed for this quickstart setup:
+
+```
+FIXME.
 ```
