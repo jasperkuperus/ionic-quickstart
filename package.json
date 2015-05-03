@@ -1,0 +1,26 @@
+{
+  "name": "ionic-quickstart",
+  "version": "0.2.0",
+  "description": "A quickstart project for ionic, using gulp",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jasperkuperus/ionic-quickstart"
+  },
+  "keywords": [
+    "ionic",
+    "gulp",
+    "quickstart"
+  ],
+  "author": "Jasper Kuperus",
+  "bugs": {
+    "url": "https://github.com/jasperkuperus/ionic-quickstart/issues"
+  },
+  "homepage": "https://github.com/jasperkuperus/ionic-quickstart",
+  "devDependencies": {
+    "bower": "~1.4.1",
+    "gulp": "~3.8.11",
+    "gulp-help": "~1.3.4",
+    "gulp-load-plugins": "~0.10.0",
+    "lodash": "~3.8.0"
+  }
+}
