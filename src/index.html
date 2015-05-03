@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html ng-app="ionicQuickstart">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title>Ionic Quickstart Example App</title>
+
+    <link href="app.css" rel="stylesheet">
+
+    <script src="lib/ionic/js/ionic.bundle.js"></script>
+
+    <script src="templates.js"></script>
+    <script src="app.js"></script>
+  </head>
+
+  <body class="quickstart-{{$state.current.name | replace:'.':'-'}}">
+    <ion-nav-bar class="bar-calm">
+      <ion-nav-title class="nav-bar-title">Quickstart</ion-nav-title>
+    </ion-nav-bar>
+    <ion-nav-view></ion-nav-view>
+  </body>
+</html>

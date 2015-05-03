@@ -1,42 +1,16 @@
 // Imports +--------------------------------+
-var _     = require('lodash');
-var gulp  = require('gulp');
-var bower = require('bower');
+var _      = require('lodash');
+var gulp   = require('gulp');
+var bower  = require('bower');
+var config = require('./gulp-config.js');
 
 // Plugin registration +--------------------+
 gulp.$ = require('gulp-load-plugins')();
 gulp.$.help(gulp);
 
 // Config +---------------------------------+
-var WATCHING    = false;
-var DIST_PATH   = './www';
-var MODULE_NAME = 'wboAdmin';
-var config      = {
-  index: {
-    src: './src/index.html',
-    dest: DIST_PATH
-  },
-  assets: {
-    src: './assets/**/*',
-    dest: DIST_PATH + '/assets'
-  },
-  templates: {
-    src: './src/**/*.html',
-    dest: DIST_PATH,
-    bundle: 'templates.js'
-  },
-  logic: {
-    src: './src/**/*.js',
-    dest: DIST_PATH,
-    bundle: 'wbo.js'
-  },
-  style: {
-    src: './src/main.scss',
-    watch: './src/**/*.scss',
-    dest: DIST_PATH,
-    bundle: 'wbo.css'
-  }
-};
+// If set to true, tasks using runAndWatch will register watch tasks
+var WATCHING = false;
 
 // Composite tasks +------------------------+
 gulp.task('emulate', 'Start ionic emulator',          ['watch', 'ionic-emulate']);
@@ -104,8 +78,8 @@ gulp.task('templates', 'Compile templates to Angular templateCache', function() 
     .pipe(gulp.$.print())
     .pipe(gulp.$.ngTemplates({
       filename: config.templates.bundle,
-      module: MODULE_NAME,
-      standalone: false
+      module: config.templates.moduleName,
+      standalone: config.templates.newModule
     }))
     .pipe(gulp.dest(config.templates.dest));
   });
@@ -118,8 +92,8 @@ gulp.task('bower-install', 'Run bower install', function(done) {
 });
 
 // Cleanup +--------------------------------+
-gulp.task('clean', 'Clean the dist (' + DIST_PATH + ') folder', function() {
-  gulp.src(DIST_PATH)
+gulp.task('clean', 'Clean the dist (' + config.dist.dest + ') folder', function() {
+  gulp.src(config.dist.dest)
   .pipe(gulp.$.rimraf());
 });
 
@@ -146,7 +120,8 @@ function runAndWatch(paths, callback) {
 
 /**
  * Runs an ionic command. If you need more ionic arguments, just pass them, they'll
- * be picked up, e.g.: runIonic('emulate', 'ios', '-l')
+ * be picked up, e.g.: runIonic('emulate', 'ios', '-l'). Unfortunately, ionic has
+ * made a pure CLI, not an API with a CLI on top of it.
  */
 function runIonic(command) {
   var argIndex = 2;
