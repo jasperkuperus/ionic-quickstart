@@ -42,9 +42,25 @@ Similar to `gulp serve`, but starts the emulator to show your app. Your app is a
 Compilation of your app is broken down in several steps and tasks. Compilation is automatically done when using either `gulp serve` or `gulp emulate`.
 
 * `gulp compile`
-Composite task to perform all compilation tasks in the correct order.
+Composite task to perform all compilation tasks in the correct order
 
-* WIP: Add short explanation for all tasks.
+* `gulp bower`
+Performs a bower install
+
+* `gulp index`
+Copies the `index.html` in `src` one on one to `www/index.html`, treated as a static asset
+
+* `gulp assets`
+Copies all static assets in `assets` to `www/assets` so you can refer to them in your app as `/assets/x.jpg`
+
+* `gulp logic`
+Compiles all javascript files in `src` to one concatenated file, `www/app.js`
+
+* `gulp style`
+Takes `src/main.scss` as entry point and compiles all imported scss to `www/app.css`
+
+* `gulp templates`
+Takes all `src/**/*.html` files, except `src/index.html` and puts them in an Angular `$templateCache` and creates a module in `www/templates.js`
 
 #### Clean
 * `gulp clean`
