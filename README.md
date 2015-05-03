@@ -64,7 +64,7 @@ Takes all `src/**/*.html` files, except `src/index.html` and puts them in an Ang
 
 #### Clean
 * `gulp clean`
-Cleans all compiled resources, effectively deleting the `./www` folder
+Cleans all compiled resources, effectively deleting the `www` folder
 
 #### Watch
 All compilation tasks can be either run for once or run continuously by registering a watch task. To enable watch, use the `gulp watch` task, e.g.:
@@ -76,5 +76,28 @@ The watch command makes sure the gulp setup is set in watch mode. All following 
 The following application structure is assumed for this quickstart setup:
 
 ```
-FIXME.
+- assets                   # Contains static assets that should be served as-is
+  - x.jpg
+- src                      # Contains the application source
+  - app                    # Contains the app-level logic files (routes, config, run blocks, etc.)
+    - routes.js
+    - ...
+  - module                 # Subfolder for each 'module'
+    - _module.scss
+    - module.html
+    - module.controller.js
+    - ...
+  - misc                   # Contains miscellaneous things
+    - some.filter.js
+    ...
+  - index.html             # The entry-point for your application
+  - main.js                # Entry point javascript file, contains app/module definition
+  - main.scss              # Entry point for sass, should import all partials
+- bower.json               # Bower file
+- gulp-config.js           # Contains configuration for the gulp setup
+- gulpfile.js              # Gulp file
+- ionic.project            # Ionic project definition
 ```
+
+### Customization
+All paths used in the gulp setup are defined in the `gulp-config.js` file. Change the paths there if you want to change your app structure.
