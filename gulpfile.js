@@ -1,26 +1,26 @@
-// Imports +--------------------------------+
+// Imports
 var _      = require('lodash');
 var gulp   = require('gulp');
 var bower  = require('bower');
 var config = require('./gulp-config.js');
 
-// Plugin registration +--------------------+
+// Plugin registration
 gulp.$ = require('gulp-load-plugins')();
 gulp.$.help(gulp);
 
-// Config +---------------------------------+
+// Config
 // If set to true, tasks using runAndWatch will register watch tasks
 var WATCHING = false;
 
-// Composite tasks +------------------------+
+// Composite tasks
 gulp.task('emulate', 'Start ionic emulator',          ['watch', 'ionic-emulate']);
 gulp.task('serve',   'Start ionic webserver @:8100',  ['watch', 'ionic-serve']);
 gulp.task('compile', 'Compile the whole app',         ['bower-install', 'index', 'assets', 'templates', 'logic', 'style']);
 
-// General +--------------------------------+
+// General
 gulp.task('default', 'Alias for this help menu', ['help']);
 
-// Ionic +----------------------------------+
+// Ionic
 gulp.task('ionic-serve', false, ['compile'], function() {
   runIonic('serve');
 });
@@ -29,12 +29,12 @@ gulp.task('ionic-emulate', false, ['compile'], function() {
   runIonic('emulate', '-l', '--address=localhost');
 });
 
-// Watch +----------------------------------+
+// Watch
 gulp.task('watch', 'Set gulp in watch mode', function() {
   WATCHING = true;
 });
 
-// Logic +----------------------------------+
+// Logic
 gulp.task('logic', 'Compile all JS logic', function() {
   runAndWatch(config.logic.src, function() {
     gulp.src(config.logic.src)
@@ -43,7 +43,7 @@ gulp.task('logic', 'Compile all JS logic', function() {
   });
 });
 
-// Style +----------------------------------+
+// Style
 gulp.task('style', 'Compile all scss', ['bower-install'], function() {
   runAndWatch(config.style.watch, function() {
     gulp.src(config.style.src)
@@ -55,7 +55,7 @@ gulp.task('style', 'Compile all scss', ['bower-install'], function() {
   });
 });
 
-// Assets +---------------------------------+
+// Assets
 gulp.task('assets', 'Copy assets to compile dir', function() {
   runAndWatch(config.assets.src, function() {
     gulp.src(config.assets.src)
@@ -63,7 +63,7 @@ gulp.task('assets', 'Copy assets to compile dir', function() {
   });
 });
 
-// HTML +-----------------------------------+
+// HTML
 gulp.task('index', 'Copy index.html', function() {
   runAndWatch(config.index.src, function() {
     gulp.src(config.index.src)
@@ -85,19 +85,19 @@ gulp.task('templates', 'Compile templates to Angular templateCache', function() 
   });
 });
 
-// Vendor stuff +---------------------------+
+// Vendor stuff
 gulp.task('bower-install', 'Run bower install', function(done) {
   bower.commands.install()
   .on('end', done.bind(null, null));
 });
 
-// Cleanup +--------------------------------+
+// Cleanup
 gulp.task('clean', 'Clean the dist (' + config.dist.dest + ') folder', function() {
   gulp.src(config.dist.dest)
   .pipe(gulp.$.rimraf());
 });
 
-// General functions +----------------------+
+// General functions
 /**
  * Simple error logging function
  */
