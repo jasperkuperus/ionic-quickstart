@@ -1,8 +1,9 @@
 // Imports
-var _      = require('lodash');
-var gulp   = require('gulp');
-var bower  = require('bower');
-var config = require('./gulp-config.js');
+var _              = require('lodash');
+var gulp           = require('gulp');
+var bower          = require('bower');
+var mainBowerFiles = require('main-bower-files');
+var config         = require('./gulp-config.js');
 
 // Plugin registration
 gulp.$ = require('gulp-load-plugins')();
@@ -15,7 +16,7 @@ var WATCHING = false;
 // Composite tasks
 gulp.task('emulate', 'Start ionic emulator',          ['watch', 'ionic-emulate']);
 gulp.task('serve',   'Start ionic webserver @:8100',  ['watch', 'ionic-serve']);
-gulp.task('compile', 'Compile the whole app',         ['bower-install', 'index', 'assets', 'templates', 'logic', 'style']);
+gulp.task('compile', 'Compile the whole app',         ['bower-install', 'index', 'assets', 'vendor', 'templates', 'logic', 'style']);
 
 // General
 gulp.task('default', 'Alias for this help menu', ['help']);
@@ -63,6 +64,12 @@ gulp.task('assets', 'Copy assets to compile dir', function() {
   });
 });
 
+gulp.task('vendor', 'Copies all vendor main files to www/lib', function() {
+  gulp.src(mainBowerFiles(), { base: 'bower_components' })
+  .pipe(gulp.$.print())
+  .pipe(gulp.dest(config.vendor.dest));
+});
+
 // HTML
 gulp.task('index', 'Copy index.html', function() {
   runAndWatch(config.index.src, function() {
@@ -88,6 +95,9 @@ gulp.task('templates', 'Compile templates to Angular templateCache', function() 
 // Vendor stuff
 gulp.task('bower-install', 'Run bower install', function(done) {
   bower.commands.install()
+  .on('error', function(error) {
+    gulp.$.util.log(gulp.$.util.colors.red('Error (bower):'), error.message);
+  })
   .on('end', done.bind(null, null));
 });
 

@@ -22,6 +22,11 @@ module.exports = {
     dest: DIST_PATH + '/assets'
   },
 
+  // vendor main files defined in bower.json of dependencies
+  vendor: {
+    dest: DIST_PATH + '/lib'
+  },
+
   // html templates config
   templates: {
     src: './src/**/*.html',
