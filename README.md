@@ -54,6 +54,9 @@ Copies the `index.html` in `src` one on one to `www/index.html`, treated as a st
 * `gulp assets`
 Copies all static assets in `assets` to `www/assets` so you can refer to them in your app as `/assets/x.jpg`
 
+* `gulp vendor`
+Copies all vendor (bower) main files to `www/lib`, preserving original folder structure.
+
 * `gulp logic`
 Compiles all javascript files in `src` to one concatenated file, `www/app.js`
 
@@ -95,7 +98,7 @@ The following application structure is assumed for this quickstart setup:
   - main.js                # Entry point javascript file, contains app/module definition
   - main.scss              # Entry point for sass, should import all partials
 - www                      # The dist build
-  - lib                    # Installed bower components
+  - lib                    # Main files for installed bower components
 - bower.json               # Bower file
 - gulp-config.js           # Contains configuration for the gulp setup
 - gulpfile.js              # Gulp file
@@ -104,3 +107,37 @@ The following application structure is assumed for this quickstart setup:
 
 ### Customization
 All paths used in the gulp setup are defined in the `gulp-config.js` file. Change the paths there if you want to change your app structure.
+
+## Bower dependencies
+Bower dependencies are copied to the `www/lib` folder, preserving folder structure. Only the files declared as `main` files in the dependency's `bower.json` are copied. For example, if you want to use lodash:
+
+```
+bower install --save lodash
+```
+
+The `vendor` task has copied the lodash files to `www/lib`, so you can now use them in your `index.html`:
+
+```
+ <script src="lib/lodash/lodash.js"></script>
+```
+
+### Overriding dependencies
+In some scenarios, the correct files might not show up in your `www/lib` folder. Often, the reason for this is either a missing or incorrect `main` block in the dependency's `bower.json`. In that case, you can override their `main` block in your own `bower.json`:
+
+```
+{
+  "name": "ionic-quickstart",
+  ...
+  "dependencies": {
+    ...
+    "my-incorrect-dep": "~x.y.z"
+  },
+  "overrides": {
+    "my-incorrect-dep": {
+      "main": [
+        "js/my-incorrect-dep.js"
+      ]
+    }
+  }
+}
+```
