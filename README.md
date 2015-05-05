@@ -2,9 +2,10 @@
 A quickstart project for ionic, using gulp, making life just that bit easier.
 
 ## Getting started
-1. Install npm modules: `npm install`
-2. Compile and start serving: `gulp serve` or `gulp emulate`
-3. See your app running at `http://localhost:8100`
+1. Make sure to have gulp globally installed: `npm install -g gulp`
+2. Install npm modules: `npm install`
+3. Compile and start serving: `gulp serve` or `gulp emulate`
+4. See your app running at `http://localhost:8100`
 
 ## Usage
 For basic usage and explanation, just run `gulp help`:
@@ -93,6 +94,8 @@ The following application structure is assumed for this quickstart setup:
   - index.html             # The entry-point for your application
   - main.js                # Entry point javascript file, contains app/module definition
   - main.scss              # Entry point for sass, should import all partials
+- www                      # The dist build
+  - lib                    # Installed bower components
 - bower.json               # Bower file
 - gulp-config.js           # Contains configuration for the gulp setup
 - gulpfile.js              # Gulp file
