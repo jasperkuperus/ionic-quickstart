@@ -24,6 +24,7 @@ module.exports = {
 
   // vendor main files defined in bower.json of dependencies
   vendor: {
+    watch: 'bower.json',
     dest: DIST_PATH + '/lib'
   },
 
