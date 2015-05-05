@@ -64,7 +64,7 @@ gulp.task('assets', 'Copy assets to compile dir', function() {
   });
 });
 
-gulp.task('vendor', 'Copies all vendor main files to www/lib', function() {
+gulp.task('vendor', 'Copies all vendor main files to www/lib', ['bower-install'] function() {
   runAndWatch(config.vendor.watch, function() {
     gulp.src(mainBowerFiles(), { base: 'bower_components' })
     .pipe(gulp.dest(config.vendor.dest));
