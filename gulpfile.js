@@ -31,7 +31,7 @@ gulp.task('ionic-serve', false, ['compile'], function() {
 });
 
 gulp.task('ionic-emulate', false, ['compile'], function() {
-  runIonic('emulate', '--livereload', '--all');
+  runIonic('emulate', '--livereload', '--all', '--consolelogs');
 });
 
 gulp.task('ionic-state-restore', false, function() {
