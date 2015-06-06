@@ -43,5 +43,8 @@
   ],
   "cordovaPlatforms": [
     "ios"
-  ]
+  ],
+  "scripts": {
+    "postinstall": "gulp ionic-state-restore"
+  }
 }

@@ -30,7 +30,7 @@ gulp.task('ionic-serve', false, ['compile'], function() {
   runIonic('serve');
 });
 
-gulp.task('ionic-emulate', false, ['compile', 'ionic-state-restore'], function() {
+gulp.task('ionic-emulate', false, ['compile'], function() {
   runIonic('emulate', '--livereload', '--all');
 });
 
@@ -154,6 +154,12 @@ function runAndWatch(paths, callback) {
  * code-separated commands. However, they heavily rely on process.argv and do not
  * consistently return a promise for when the command is done. Therefore, running
  * two subsequent commands was not possible using that approach.
+ *
+ * @param {object} [options] If last arg is given an object, it is parsed as an
+ *                           options argument:
+ *                           {
+ *                             sync: false, // Run this command sync in stead of async
+ *                           }
  */
 function runIonic() {
   var spawnFn = spawn;
