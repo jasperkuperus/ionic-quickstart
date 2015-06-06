@@ -26,8 +26,12 @@ gulp.task('ionic-serve', false, ['compile'], function() {
   runIonic('serve');
 });
 
-gulp.task('ionic-emulate', false, ['compile'], function() {
+gulp.task('ionic-emulate', false, ['compile', 'ionic-state-restore'], function() {
   runIonic('emulate', '--livereload', '--all');
+});
+
+gulp.task('ionic-state-restore', false, function() {
+  runIonic('state', 'restore');
 });
 
 // Watch
@@ -139,16 +143,15 @@ function runIonic(command) {
   var argIndex = 2;
   var argBack = process.argv;
 
-  // If it's a cordova argument, add it, rename command to cordova
-  if(_.contains(['emulate'], command)) {
-    process.argv[argIndex++] = command;
-    command = 'cordova';
-  }
-
   // Set other optional arguments
-  _.each(_.tail(arguments), function(argument) {
+  _.each(arguments, function(argument) {
     process.argv[argIndex++] = argument;
   })
+
+  // If it's a cordova argument, add it, rename command to cordova
+  if(_.contains(['emulate'], command)) {
+    command = 'cordova';
+  }
 
   // Run the ionic command line
   require('ionic/bin/ionic');
