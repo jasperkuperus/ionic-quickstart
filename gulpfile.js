@@ -27,7 +27,7 @@ gulp.task('ionic-serve', false, ['compile'], function() {
 });
 
 gulp.task('ionic-emulate', false, ['compile'], function() {
-  runIonic('emulate', '-l', '--address=localhost');
+  runIonic('emulate', '--livereload', '--all');
 });
 
 // Watch
@@ -132,7 +132,8 @@ function runAndWatch(paths, callback) {
 /**
  * Runs an ionic command. If you need more ionic arguments, just pass them, they'll
  * be picked up, e.g.: runIonic('emulate', 'ios', '-l'). Unfortunately, ionic has
- * made a pure CLI, not an API with a CLI on top of it.
+ * made a pure CLI, not an API with a CLI on top of it. Therefore, this method changes
+ * process.argv in such a way that ionic can run correctly.
  */
 function runIonic(command) {
   var argIndex = 2;
@@ -149,10 +150,8 @@ function runIonic(command) {
     process.argv[argIndex++] = argument;
   })
 
-  // Require the necessary ionic stuff, run it
-  var ionic   = require('ionic/lib/ionic').Ionic;
-  var command = require('ionic/lib/ionic/' + command).IonicTask;
-  new command().run(ionic)
+  // Run the ionic command line
+  require('ionic/bin/ionic');
 
   // Reset arg backup
   process.argv = argBack;
