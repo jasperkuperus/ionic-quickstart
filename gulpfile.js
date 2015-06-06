@@ -47,8 +47,10 @@ gulp.task('watch', 'Set gulp in watch mode', function() {
 gulp.task('logic', 'Compile all JS logic', function() {
   runAndWatch(config.logic.src, function() {
     gulp.src(config.logic.src)
-    .pipe(gulp.$.coffee())
+    .pipe(gulp.$.sourcemaps.init())
+    .pipe(gulp.$.coffee({ bare: true }))
     .pipe(gulp.$.concat(config.logic.bundle))
+    .pipe(gulp.$.sourcemaps.write('./'))
     .pipe(gulp.dest(config.logic.dest));
   });
 });
