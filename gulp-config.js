@@ -37,9 +37,9 @@ module.exports = {
     newModule: true
   },
 
-  // Javascript logic config
+  // Coffeescript logic config
   logic: {
-    src: './src/**/*.js',
+    src: './src/**/*.coffee',
     dest: DIST_PATH,
     bundle: 'app.js'
   },
