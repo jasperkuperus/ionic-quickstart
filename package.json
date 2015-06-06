@@ -45,6 +45,6 @@
     "ios"
   ],
   "scripts": {
-    "postinstall": "gulp ionic-state-restore"
+    "postinstall": "gulp compile && gulp ionic-state-restore"
   }
 }
