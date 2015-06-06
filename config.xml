@@ -3,7 +3,7 @@
   <name>Ionic Quickstart</name>
   <description>A quickstart project setup for working with Ionic and Gulp</description>
   <author>Jasper Kuperus</author>
-  <content src="index.html"/>
+  <content src="http://localhost:8100" original-src="index.html"/>
   <access origin="*"/>
   <preference name="webviewbounce" value="false"/>
   <preference name="UIWebViewBounce" value="false"/>

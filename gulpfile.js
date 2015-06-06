@@ -1,6 +1,6 @@
 // Imports
-var Q              = require('q');
 var _              = require('lodash');
+var del            = require('del');
 var gulp           = require('gulp');
 var bower          = require('bower');
 var mainBowerFiles = require('main-bower-files');
@@ -17,9 +17,10 @@ gulp.$.help(gulp);
 var WATCHING = false;
 
 // Composite tasks
-gulp.task('emulate', 'Start ionic emulator',          ['watch', 'ionic-emulate']);
-gulp.task('serve',   'Start ionic webserver @:8100',  ['watch', 'ionic-serve']);
-gulp.task('compile', 'Compile the whole app',         ['bower-install', 'index', 'assets', 'vendor', 'templates', 'logic', 'style']);
+gulp.task('emulate',   'Start ionic emulator',                    ['watch', 'ionic-emulate']);
+gulp.task('serve',     'Start ionic webserver @:8100',            ['watch', 'ionic-serve']);
+gulp.task('compile',   'Compile the whole app',                   ['bower-install', 'index', 'assets', 'vendor', 'templates', 'logic', 'style']);
+gulp.task('clean-all', 'Cleans ALL implicitly created resources', ['clean', 'clean-ionic', 'clean-dependencies']);
 
 // General
 gulp.task('default', 'Alias for this help menu', ['help']);
@@ -110,9 +111,17 @@ gulp.task('bower-install', 'Run bower install', function(done) {
 });
 
 // Cleanup
-gulp.task('clean', 'Clean the dist (' + config.dist.dest + ') folder', function() {
-  gulp.src(config.dist.dest)
-  .pipe(gulp.$.rimraf());
+gulp.task('clean', 'Clean the dist (' + config.dist.dest + ') folder', function(cb) {
+  del([config.dist.dest], cb);
+});
+
+gulp.task('clean-ionic', 'Cleans ionic generated folders like `hooks`, `platforms`, `plugins`', function(cb) {
+  del(config.ionicPaths, cb);
+});
+
+gulp.task('clean-dependencies', 'Cleans all dependencies folders, `bower_components` and `node_modules`', function(cb) {
+  gulp.$.util.log(gulp.$.util.colors.red('WARNING:'), 'Please note that clean-dependencies also cleans `node_modules`! An `npm install` is required after this!');
+  del(config.dependencyPaths, cb);
 });
 
 // General functions

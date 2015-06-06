@@ -50,5 +50,18 @@ module.exports = {
     watch: './src/**/*.scss',
     dest: DIST_PATH,
     bundle: 'app.css'
-  }
+  },
+
+  // Paths for dependencies
+  dependencyPaths: [
+    './bower_components',
+    './node_modules'
+  ],
+
+  // Paths for ionic generated resources
+  ionicPaths: [
+    './hooks',
+    './platforms',
+    './plugins'
+  ]
 };
