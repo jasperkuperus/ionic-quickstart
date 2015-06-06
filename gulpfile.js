@@ -1,9 +1,12 @@
 // Imports
+var Q              = require('q');
 var _              = require('lodash');
 var gulp           = require('gulp');
 var bower          = require('bower');
 var mainBowerFiles = require('main-bower-files');
 var config         = require('./gulp-config.js');
+var spawn          = require('child_process').spawn;
+var spawnSync      = require('child_process').spawnSync;
 
 // Plugin registration
 gulp.$ = require('gulp-load-plugins')();
@@ -31,7 +34,7 @@ gulp.task('ionic-emulate', false, ['compile', 'ionic-state-restore'], function()
 });
 
 gulp.task('ionic-state-restore', false, function() {
-  runIonic('state', 'restore');
+  runIonic('state', 'restore', { sync: true });
 });
 
 // Watch
@@ -134,28 +137,28 @@ function runAndWatch(paths, callback) {
 }
 
 /**
- * Runs an ionic command. If you need more ionic arguments, just pass them, they'll
- * be picked up, e.g.: runIonic('emulate', 'ios', '-l'). Unfortunately, ionic has
- * made a pure CLI, not an API with a CLI on top of it. Therefore, this method changes
- * process.argv in such a way that ionic can run correctly.
+ * Runs an ionic command, just pass all arguments for ionic to this function,
+ * it'll be mapped to a command line call, e.g.: runIonic('emulate', 'ios', '-l').
+ *
+ * Unfortunately, ionic has made a pure CLI, not an API with a CLI on top of it.
+ * Therefore, we spawn a subprocess. First we tried running Ionic by using their
+ * code-separated commands. However, they heavily rely on process.argv and do not
+ * consistently return a promise for when the command is done. Therefore, running
+ * two subsequent commands was not possible using that approach.
  */
-function runIonic(command) {
-  var argIndex = 2;
-  var argBack = process.argv;
+function runIonic() {
+  var spawnFn = spawn;
 
-  // Set other optional arguments
-  _.each(arguments, function(argument) {
-    process.argv[argIndex++] = argument;
-  })
+  // If last argument is an object, treat it as options
+  if(_.isObject(_.last(arguments))) {
+    var options = _.last(arguments);
 
-  // If it's a cordova argument, add it, rename command to cordova
-  if(_.contains(['emulate'], command)) {
-    command = 'cordova';
+    // If options.sync is set to true, make sure the command run in sync
+    if(options.sync === true) {
+      spawnFn = spawnSync;
+    }
   }
 
-  // Run the ionic command line
-  require('ionic/bin/ionic');
-
-  // Reset arg backup
-  process.argv = argBack;
+  // Call the ionic cmd as child process
+  spawnFn('ionic', _.values(arguments), { stdio: 'inherit' });
 }
